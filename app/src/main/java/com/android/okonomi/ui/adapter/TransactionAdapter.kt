@@ -15,12 +15,9 @@ import com.android.okonomi.model.TypeOfTransaction
 import kotlinx.android.synthetic.main.transaction_item.view.*
 
 class TransactionAdapter(
-    transactionList: List<Transaction>,
-    context: Context
+    private val transactionList: List<Transaction>,
+    private val context: Context
 ) : BaseAdapter() {
-
-    private val transactionList = transactionList
-    private val context = context
 
     private val NUMBER_CHARACTER = 14
 
@@ -30,31 +27,67 @@ class TransactionAdapter(
 
         val transaction = transactionList[position]
 
-        if (transaction.typeOfTransaction == TypeOfTransaction.INCOME) {
-            createdView.transaction_total_text_view
-                .setTextColor(ContextCompat.getColor(context, R.color.colorAccent))
-        } else {
-            createdView.transaction_total_text_view
-                .setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDark))
-        }
-
-        if (transaction.typeOfTransaction == TypeOfTransaction.INCOME) {
-            createdView.ic_transaction_image_view
-                .setBackgroundResource(R.drawable.icon_transaction_income)
-        } else {
-            createdView.ic_transaction_image_view
-                .setBackgroundResource(R.drawable.icon_transaction_debt)
-        }
-
-        createdView.transaction_total_text_view.text = transaction.amount
-            .currencyToCad()
-        createdView.transaction_category_text_view.text = transaction.categoryOfTransaction
-            .categoryStringSize(NUMBER_CHARACTER)
-        createdView.transaction_date_text_view.text = transaction.date
-            .formatToEnCa()
+        addTotal(transaction, createdView)
+        addIcon(transaction, createdView)
+        addCategory(createdView, transaction)
+        addDate(createdView, transaction)
 
         return createdView
     }
+
+    private fun addDate(
+        createdView: View,
+        transaction: Transaction
+    ) {
+        createdView.transaction_date_text_view.text = transaction.date
+            .formatToEnCa()
+    }
+
+    private fun addCategory(
+        createdView: View,
+        transaction: Transaction
+    ) {
+        createdView.transaction_category_text_view.text = transaction.categoryOfTransaction
+            .categoryStringSize(NUMBER_CHARACTER)
+    }
+
+    private fun addIcon(
+        transaction: Transaction,
+        createdView: View
+    ) {
+        val icon = iconType(transaction.typeOfTransaction)
+        createdView.ic_transaction_image_view
+            .setBackgroundResource(icon)
+    }
+
+    private fun iconType(type: TypeOfTransaction): Int {
+        if (type == TypeOfTransaction.INCOME) {
+            return R.drawable.icon_transaction_income
+        }
+        return R.drawable.icon_transaction_debt
+    }
+
+    private fun addTotal(
+        transaction: Transaction,
+        createdView: View
+    ) {
+        val color: Int = colorOfTransaction(transaction.typeOfTransaction)
+        createdView.transaction_total_text_view
+            .setTextColor(color) // set fora
+
+        createdView.transaction_total_text_view.text = transaction.amount
+            .currencyToCad()
+    }
+
+    private fun colorOfTransaction(
+        type: TypeOfTransaction
+    ): Int {
+        if (type == TypeOfTransaction.INCOME) {
+            return ContextCompat.getColor(context, R.color.income)
+        }
+        return ContextCompat.getColor(context, R.color.debt)
+    }
+
 
     override fun getItem(position: Int): Transaction {
         return transactionList[position]

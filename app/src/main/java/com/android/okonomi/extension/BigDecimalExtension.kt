@@ -10,4 +10,5 @@ fun BigDecimal.currencyToCad() : String{
     return currencyCad
         .format(this)
         .replace("$", "$ ")
+        .replace("-$ ", "$ -")
 }
