@@ -11,11 +11,15 @@ import com.android.okonomi.model.TypeOfTransaction
 import com.android.okonomi.ui.TotalView
 import com.android.okonomi.ui.adapter.TransactionAdapter
 import com.android.okonomi.ui.dialog.AddTransactionDialog
+import com.android.okonomi.ui.dialog.EditTransactionDialog
 import kotlinx.android.synthetic.main.activity_home_transaction.*
 
 class TransactionActivity : AppCompatActivity() {
 
     private val listTransaction: MutableList<Transaction> = mutableListOf()
+    private val activityView by lazy {
+        window.decorView
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,10 +42,11 @@ class TransactionActivity : AppCompatActivity() {
     }
 
     private fun callDialogDebt(type: TypeOfTransaction) {
-        AddTransactionDialog(window.decorView as ViewGroup, this)
+        AddTransactionDialog(activityView as ViewGroup, this)
             .setUpDialog(type, object : TransactionDelegate {
                 override fun delegate(transaction: Transaction) {
-                    updateListOfTransactions(transaction)
+                    listTransaction.add(transaction)
+                    updateListOfTransactions()
                     transaction_list_button_id.close(true)
                 }
 
@@ -49,31 +54,56 @@ class TransactionActivity : AppCompatActivity() {
     }
 
     private fun callDialogIncome(type: TypeOfTransaction) {
-        AddTransactionDialog(window.decorView as ViewGroup, this)
+        AddTransactionDialog(activityView as ViewGroup, this)
             .setUpDialog(type, object : TransactionDelegate {
                 override fun delegate(transaction: Transaction) {
-                    updateListOfTransactions(transaction)
+                    addTransaction(transaction)
                     transaction_list_button_id.close(true)
                 }
 
             })
     }
 
-
-    private fun updateListOfTransactions(transaction: Transaction) {
+    private fun addTransaction(transaction: Transaction) {
         listTransaction.add(transaction)
+        updateListOfTransactions()
+    }
+
+
+    private fun updateListOfTransactions() {
         setUpList()
         setUpTotal()
     }
 
     private fun setUpTotal() {
-        val view: View = window.decorView
-        val totalView = TotalView(this, view, listTransaction)
+        val totalView = TotalView(this, activityView, listTransaction)
         totalView.update()
     }
 
     private fun setUpList() {
-        list_transaction_list_view.adapter = TransactionAdapter(listTransaction, this)
+        val adapterTransaction = TransactionAdapter(listTransaction, this)
+        with(list_transaction_list_view){
+            adapter = adapterTransaction
+            setOnItemClickListener { _, _, i, _ ->
+                val transaction = listTransaction[i]
+                callEditDialog(transaction, i)
+            }
+        }
+    }
+
+    private fun callEditDialog(transaction: Transaction, i: Int) {
+        EditTransactionDialog(activityView as ViewGroup, this)
+            .setUpDialog(transaction, object : TransactionDelegate {
+                override fun delegate(transaction: Transaction) {
+                    editTransaction(transaction, i)
+                }
+
+            })
+    }
+
+    private fun editTransaction(transaction: Transaction, i: Int) {
+        listTransaction[i] = transaction
+        updateListOfTransactions()
     }
 
 }

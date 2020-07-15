@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.header_item_transaction_info.view.*
 import java.math.BigDecimal
 
 class TotalView(
-    private val context: Context,
+    context: Context,
     private val view: View,
     listTransaction: List<Transaction>
 ) {
@@ -21,7 +21,7 @@ class TotalView(
     private val incomeColor = ContextCompat.getColor(context, R.color.income)
     private val debtColor = ContextCompat.getColor(context, R.color.debt)
 
-    fun update(){
+    fun update() {
         addIncomeTotal()
         addDebtTotal()
         addAmountTotal()
@@ -29,10 +29,12 @@ class TotalView(
 
     private fun addIncomeTotal() {
         val totalIncome = fullAmount.income
+
         with(view.income_sum) {
             setTextColor(incomeColor)
             text = totalIncome.currencyToCad()
         }
+
     }
 
 
@@ -42,13 +44,12 @@ class TotalView(
             setTextColor(debtColor)
             text = totalDebt.currencyToCad()
         }
-
     }
 
     private fun addAmountTotal() {
         val total1 = fullAmount.total
         val color = colorBy(total1)
-        with(view.detail_total_id){
+        with(view.detail_total_id) {
             setTextColor(color)
             text = total1.currencyToCad()
         }
