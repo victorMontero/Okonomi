@@ -7,38 +7,59 @@ import com.android.okonomi.R
 import com.android.okonomi.extension.currencyToCad
 import com.android.okonomi.model.Total
 import com.android.okonomi.model.Transaction
-import com.android.okonomi.model.TypeOfTransaction
 import kotlinx.android.synthetic.main.header_item_transaction_info.view.*
 import java.math.BigDecimal
 
-class TotalView (private val context: Context,
-                 private val view: View,
-                 listTransaction: List<Transaction>) {
+class TotalView(
+    private val context: Context,
+    private val view: View,
+    listTransaction: List<Transaction>
+) {
 
-    private val total: Total = Total(listTransaction)
+    private val fullAmount: Total = Total(listTransaction)
 
-    fun addIncomeTotal() {
-        val totalIncome = total.income()
-        view.income_sum.
-        setTextColor(ContextCompat.getColor(context, R.color.income))
-        view.income_sum.text = totalIncome.currencyToCad()
+    private val incomeColor = ContextCompat.getColor(context, R.color.income)
+    private val debtColor = ContextCompat.getColor(context, R.color.debt)
+
+    fun update(){
+        addIncomeTotal()
+        addDebtTotal()
+        addAmountTotal()
     }
 
-    fun addDebtTotal() {
-        val totalDebt = total.debt()
-        view.debt_sum.
-        setTextColor(ContextCompat.getColor(context, R.color.debt))
-        view.debt_sum.text = totalDebt.currencyToCad()
-    }
-
-    fun addAmountTotal(){
-        val total1 = total.total()
-        if(total1.compareTo(BigDecimal.ZERO) >= 0){
-            view.detail_total_id.setTextColor(ContextCompat.getColor(context, R.color.income))
-        } else{
-            view.detail_total_id.setTextColor(ContextCompat.getColor(context, R.color.debt))
+    private fun addIncomeTotal() {
+        val totalIncome = fullAmount.income
+        with(view.income_sum) {
+            setTextColor(incomeColor)
+            text = totalIncome.currencyToCad()
         }
-        view.detail_total_id.text = total1.currencyToCad()
+    }
+
+
+    private fun addDebtTotal() {
+        val totalDebt = fullAmount.debt
+        with(view.debt_sum) {
+            setTextColor(debtColor)
+            text = totalDebt.currencyToCad()
+        }
+
+    }
+
+    private fun addAmountTotal() {
+        val total1 = fullAmount.total
+        val color = colorBy(total1)
+        with(view.detail_total_id){
+            setTextColor(color)
+            text = total1.currencyToCad()
+        }
+    }
+
+    private fun colorBy(total1: BigDecimal): Int {
+        if (total1 >= BigDecimal.ZERO) {
+            return incomeColor
+        } else {
+            return debtColor
+        }
     }
 
 }

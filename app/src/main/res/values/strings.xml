@@ -3,4 +3,6 @@
     <string name="text_income">income</string>
     <string name="text_debt">debt</string>
     <string name="text_total">total</string>
+    <string name="text_date">date</string>
+    <string name="text_category">category</string>
 </resources>

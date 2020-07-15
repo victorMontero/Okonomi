@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="category_of_incomes">
+        <item>undefined income</item>
+        <item>savings</item>
+        <item>loan</item>
+        <item>bill</item>
+        <item>gift</item>
+        <item>income</item>
+        <item>sell</item>
+    </string-array>
+    <string-array name="category_of_debts">
+        <item>undefined debt</item>
+        <item>home</item>
+        <item>food</item>
+        <item>mobile</item>
+        <item>bill</item>
+        <item>joy</item>
+        <item>cloths</item>
+        <item>health</item>
+        <item>grocery</item>
+        <item>transport</item>
+    </string-array>
+    <string-array name="months">
+        <item>january</item>
+        <item>february</item>
+        <item>march</item>
+        <item>april</item>
+        <item>may</item>
+        <item>june</item>
+        <item>july</item>
+        <item>august</item>
+        <item>september</item>
+        <item>october</item>
+        <item>november</item>
+        <item>december</item>
+    </string-array>
+</resources>
