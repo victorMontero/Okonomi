@@ -1,11 +1,13 @@
 package com.android.okonomi.ui.activity
 
 import android.os.Bundle
-import android.view.View
+import android.view.Menu
+import android.view.MenuItem
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.appcompat.app.AppCompatActivity
 import com.android.okonomi.R
-import com.android.okonomi.delegate.TransactionDelegate
+import com.android.okonomi.dao.TransactionDAO
 import com.android.okonomi.model.Transaction
 import com.android.okonomi.model.TypeOfTransaction
 import com.android.okonomi.ui.TotalView
@@ -16,7 +18,8 @@ import kotlinx.android.synthetic.main.activity_home_transaction.*
 
 class TransactionActivity : AppCompatActivity() {
 
-    private val listTransaction: MutableList<Transaction> = mutableListOf()
+    private val dao = TransactionDAO()
+    private val listTransaction = dao.listTransaction
     private val activityView by lazy {
         window.decorView
     }
@@ -43,29 +46,26 @@ class TransactionActivity : AppCompatActivity() {
 
     private fun callDialogDebt(type: TypeOfTransaction) {
         AddTransactionDialog(activityView as ViewGroup, this)
-            .setUpDialog(type, object : TransactionDelegate {
-                override fun delegate(transaction: Transaction) {
-                    listTransaction.add(transaction)
-                    updateListOfTransactions()
-                    transaction_list_button_id.close(true)
-                }
+            .setUpDialog(type) {
 
-            })
+                listTransaction.add(it)
+                transaction_list_button_id.close(true)
+            }
     }
 
     private fun callDialogIncome(type: TypeOfTransaction) {
         AddTransactionDialog(activityView as ViewGroup, this)
-            .setUpDialog(type, object : TransactionDelegate {
-                override fun delegate(transaction: Transaction) {
-                    addTransaction(transaction)
-                    transaction_list_button_id.close(true)
-                }
+            .setUpDialog(type) {
 
-            })
+                addTransaction(it)
+                transaction_list_button_id.close(true)
+
+
+            }
     }
 
     private fun addTransaction(transaction: Transaction) {
-        listTransaction.add(transaction)
+        dao.addTransaction(transaction)
         updateListOfTransactions()
     }
 
@@ -88,21 +88,38 @@ class TransactionActivity : AppCompatActivity() {
                 val transaction = listTransaction[i]
                 callEditDialog(transaction, i)
             }
+            setOnCreateContextMenuListener { menu, _, _ ->
+                menu.add(Menu.NONE, 1, Menu.NONE, "delete")
+            }
         }
+    }
+
+    override fun onContextItemSelected(item: MenuItem?): Boolean {
+        val menuId = item?.itemId
+        if(menuId == 1){
+            val adapterMenuInfo = item.menuInfo as AdapterView.AdapterContextMenuInfo
+            val transactionPosition = adapterMenuInfo.position
+            deleteTransaction(transactionPosition)
+        }
+        return super.onContextItemSelected(item)
+    }
+
+    private fun deleteTransaction(position: Int) {
+        dao.deleteTransaction(position)
+        updateListOfTransactions()
     }
 
     private fun callEditDialog(transaction: Transaction, i: Int) {
         EditTransactionDialog(activityView as ViewGroup, this)
-            .setUpDialog(transaction, object : TransactionDelegate {
-                override fun delegate(transaction: Transaction) {
-                    editTransaction(transaction, i)
-                }
+            .setUpDialog(transaction) {
 
-            })
+                editTransaction(it, i)
+
+            }
     }
 
     private fun editTransaction(transaction: Transaction, i: Int) {
-        listTransaction[i] = transaction
+        dao.editTransaction(transaction, i)
         updateListOfTransactions()
     }
 

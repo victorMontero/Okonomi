@@ -28,15 +28,15 @@ abstract class TransactionDialogForm(
     protected val dateField = createdView.form_new_transaction_date
     protected abstract val titleButtonPositive: String
 
-    fun setUpDialog(type: TypeOfTransaction, transactionDelegate: TransactionDelegate) {
+    fun setUpDialog(type: TypeOfTransaction, delegate: (transaction : Transaction) -> Unit) {
         setUpDateField()
         setUpCategoryField(type)
-        setUpTransactionForm(type, transactionDelegate)
+        setUpTransactionForm(type, delegate)
     }
 
     private fun setUpTransactionForm(
         type: TypeOfTransaction,
-        transactionDelegate: TransactionDelegate
+        delegate: (transaction: Transaction) -> Unit
     ) {
 
         val title = titleBy(type)
@@ -60,7 +60,7 @@ abstract class TransactionDialogForm(
                     categoryOfTransaction = categoryToString
                 )
 
-                transactionDelegate.delegate(transactionCreated)
+                delegate(transactionCreated)
 
             }
             .setNegativeButton("cancel", null)

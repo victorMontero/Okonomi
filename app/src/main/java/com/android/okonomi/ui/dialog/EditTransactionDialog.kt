@@ -26,10 +26,10 @@ class EditTransactionDialog(
     }
 
 
-    fun setUpDialog(transaction: Transaction, transactionDelegate: TransactionDelegate) {
+    fun setUpDialog(transaction: Transaction, delegate: (transaction: Transaction) -> Unit) {
         val type = transaction.typeOfTransaction
 
-        super.setUpDialog(type, transactionDelegate)
+        super.setUpDialog(type, delegate)
 
         startsField(transaction)
     }
