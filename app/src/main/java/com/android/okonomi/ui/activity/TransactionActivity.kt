@@ -48,7 +48,7 @@ class TransactionActivity : AppCompatActivity() {
         AddTransactionDialog(activityView as ViewGroup, this)
             .setUpDialog(type) {
 
-                listTransaction.add(it)
+                addTransaction(it)
                 transaction_list_button_id.close(true)
             }
     }

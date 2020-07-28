@@ -1,0 +1,1 @@
+Essa semana eu foquei em desenvolver em Kotlin, pra quem vem do Java como eu, as diferenças são percebidas nas primeiras linhas de código, 

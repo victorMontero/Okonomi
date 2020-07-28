@@ -5,12 +5,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#E4F1DCD2"
     tools:context=".ui.activity.TransactionActivity">
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/icon_okonomi"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="end"
+            android:background="#765D69"
+            android:scaleType="fitCenter"
+            android:src="@drawable/icon_okonomi_ok" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="@color/colorAccent"/>
 
         <include
             android:id="@+id/transaction_list_info"
@@ -20,8 +39,10 @@
             android:id="@+id/list_transaction_list_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
             android:divider="@null"
-            android:dividerHeight="0dp" />
+            android:dividerHeight="0dp"/>
+
 
     </LinearLayout>
 
@@ -32,23 +53,23 @@
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:paddingBottom="10dp"
-        app:menu_backgroundColor="#ccffffff"
-        app:menu_colorNormal="#367C25"
-        app:menu_colorPressed="#266817"
-        app:menu_colorRipple="#195b09"
-        app:menu_labels_colorNormal="#fff"
+        app:menu_backgroundColor="#E4F1DCD2"
+        app:menu_colorNormal="@color/colorAccent"
+        app:menu_colorPressed="#604B55"
+        app:menu_colorRipple="#55454D"
+        app:menu_labels_colorNormal="@color/colorAccent"
         app:menu_labels_ellipsize="end"
         app:menu_labels_singleLine="true"
-        app:menu_labels_textColor="#000">
+        app:menu_labels_textColor="@color/colorPrimaryDark">
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/button_add_income_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/fab_add"
-            app:fab_colorNormal="@android:color/darker_gray"
-            app:fab_colorPressed="#2945fc"
-            app:fab_colorRipple="#3216e2"
+            app:fab_colorNormal="@color/income"
+            app:fab_colorPressed="#759789"
+            app:fab_colorRipple="#5C776C"
             app:fab_label="@string/text_income"
             app:fab_size="mini" />
 
@@ -57,9 +78,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/fab_add"
-            app:fab_colorNormal="@android:color/holo_orange_dark"
-            app:fab_colorPressed="#2945fc"
-            app:fab_colorRipple="#3216e2"
+            app:fab_colorNormal="@color/debt"
+            app:fab_colorPressed="#BD666E"
+            app:fab_colorRipple="#8F4A50"
             app:fab_label="@string/text_debt"
             app:fab_size="mini" />
 
