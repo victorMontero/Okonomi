@@ -1,1 +1,9 @@
-Essa semana eu foquei em desenvolver em Kotlin, pra quem vem do Java como eu, as diferenças são percebidas nas primeiras linhas de código, 
+Essa semana finalizei meu primeiro projeto em Kotlin, pra quem vem do Java como eu, as diferenças aparecem logo nas primeiras linhas de código, desde a sintaxe limpa e expressiva até suas soluções null safe trazem mais segurança para o desenvolvimento de aplicativos. 
+
+Consegui perceber essas diferenças e posso falar que fiquei apaixonado por essa linguagem, seja por coisas simples porém práticas como os String Templates ou recursos mais robustos como Elvis Operator, que trás um ganho muito grande para evitar os casos de Null Pointer Exception.
+
+Com a ajuda da @Alura desenvolvi um aplicativo para registro de finanças, o økonomi (econômia em norueguês), ele automatiza o registro de entradas e saídas financeiras no dia a dia e faz um balanço delas em tempo real.
+
+Também consegui dar uma atenção à interface do projeto trazendo minhas skills de designer para resolver esse desafio de forma mais concisa, agora vou continuar desenvolvendo em Kotlin e me familiarizando cada dia mais com seus recursos e ferramentas.
+
+Se você tiver alguma dica ou sugestão sobre o projeto ou sobre o desenvolvimento Android em Kotlin, deixa um comentário pra gente conversar sobre : )

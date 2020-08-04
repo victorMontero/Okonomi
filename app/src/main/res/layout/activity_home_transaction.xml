@@ -8,10 +8,6 @@
     android:background="#E4F1DCD2"
     tools:context=".ui.activity.TransactionActivity">
 
-    <ImageView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:src="@drawable/icon_okonomi"/>
 
     <LinearLayout
         android:layout_width="match_parent"

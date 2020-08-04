@@ -11,8 +11,6 @@ fun String.categoryStringSize(numberOfCharacter: Int): String {
     return this
 }
 
-
-
 fun String.convertToCalendar(): Calendar {
     val canadaFormat = SimpleDateFormat("yyyy-MM-dd")
     val convertedDate: Date = canadaFormat.parse(this)
